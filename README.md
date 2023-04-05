@@ -26,7 +26,13 @@ https://securityzines.com/assets/img/flyers/downloads/gg/cicd.png
 ## C10k problem :
 	Problem of optimising network sockets to handle a large number of clients at the same time 
   
-  
+
+
+<p align="center" /p>
+<img src="https://pbs.twimg.com/media/EQGomZFWoAYIU3T.jpg" width="1000">
   
 <p align="center" /p>
-<img src="https://securityzines.com/assets/img/flyers/downloads/gg/cicd.png" width="1000">
+<img src="https://pbs.twimg.com/media/EJgR3NeXYAAFMaj.jpg:large" width="1000">
+
+
+
