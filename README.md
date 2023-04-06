@@ -34,5 +34,7 @@ https://securityzines.com/assets/img/flyers/downloads/gg/cicd.png
 <p align="center" /p>
 <img src="https://pbs.twimg.com/media/EJgR3NeXYAAFMaj.jpg:large" width="1000">
 
+<p align="center" /p>
+<img src="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*oQBStcYmbbtP5n58I1Lb_A.png" width="600">
 
 
