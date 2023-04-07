@@ -1,16 +1,47 @@
 # Inception
 
-Docker is a popular containerization technology that makes it easier to create, manage, and deploy containers. **(Containerization technology existed in Linux before Docker, but Docker made it more user-friendly and streamlined the process)** It is built on top of existing Linux technologies such as namespaces and cgroups, which are used to provide an isolated and controlled environment for running processes, while also ensuring that resource usage is limited and controlled.
 
+
+[Docker](https://en.wikipedia.org/wiki/Docker,_Inc.) is a popular containerization technology that makes it easier to create, manage, and deploy containers. **(Containerization technology existed in Linux before Docker, but Docker made it more user-friendly and streamlined the process)** It is built on top of existing Linux technologies such as namespaces and cgroups, which are used to provide an isolated and controlled environment for running processes, while also ensuring that resource usage is limited and controlled.
+
+> **Note**
+
+>  Docker did not "take out" these technologies from Linux. Rather, Docker leveraged(profit) these technologies to make it easier to create and manage containers.
 
 
 Docker runs on Windows and macOS by using a lightweight virtual machine called the **Docker Desktop VM** (it runs Linux as its OS). This Linux VM provides a platform for Docker to build and run containers just as if it were running on a native Linux system. The Docker Desktop VM is provided by the Windows Subsystem for Linux (WSL) on Windows and runs natively on macOS.
 
 
-Namespaces are a mechanism for isolating system resources such as process IDs, network interfaces, file systems, and user IDs between different processes or groups of processes. Namespaces provide a way to create isolated environments, like a container, where a group of processes can have its own view of the system resources and separate from the host operating system and other containers. 
 
 
-Cgroups are a kernel feature that allows the allocation of resources such as CPU time, memory, disk I/O, and network bandwidth to groups of processes. By using cgroups, Docker is able to limit the amount of resources that a container or a group of processes can use, which helps to ensure that the host system's resources are shared fairly among all running containers and processes.
+
+$\color{red}{Namespaces}$ are a mechanism for isolating system resources such as process IDs, network interfaces, file systems, and user IDs between different processes or groups of processes. Namespaces provide a way to create isolated environments, like a container, where a group of processes can have its own view of the system resources and separate from the host operating system and other containers. 
+
+
+$\color{green}{Cgroups}$  are a kernel feature that allows the allocation of resources such as CPU time, memory, disk I/O, and network bandwidth to groups of processes. By using cgroups, Docker is able to limit the amount of resources that a container or a group of processes can use, which helps to ensure that the host system's resources are shared fairly among all running containers and processes.
+
+
+
+The ``runc`` command allow us to creates a new container with a provided bundle directory as the root filesystem for the container and a config.json file in the bundle directory containing the configuration for the container.
+
+When you create a container using a container runtime like ``runc`` you need to provide a root filesystem that will be used by the container. This allows the container to run as if it were a completely separate operating system, with its own set of files and directories that are isolated from the host system.
+
+- The Root filesystem include all the files and directories that are necessary for the container to run, such as libraries, binaries, and configuration files (Ex: a directory containing a full Linux operating system, or just the files necessary to run a specific application.)
+
+- The ``config.json`` is a configuration file that specifies various settings for the container, such as the command to run, environment variables, and networking settings 
+
+
+	    runc create <container-id> --bundle=<bundle-path>
+
+* container-id	: is the name of the container
+* bundle-path	: is the path to the bundle directory containing the root filesystem, the config file, and any other dependencies required by the container such as libraries, binaries
+
+After the container is created, it can be started and managed using the runc start, runc stop, and runc delete commands, among others.
+
+
+> **Note**
+
+> With ``runc`` you can create containers without the need for Docker. However, it is important to note that runc is a lower-level tool compared to Docker and requires more manual configuration and setup, So n contrast Docker provides a higher-level interface and automates many of the container management tasks.
 
 
 Docker uses both namespaces and cgroups to create and manage containers. By using these technologies, Docker is able to provide a lightweight and portable solution for running applications, without the need for a separate virtual machine. Docker uses the open-source container runtime called "runc" under the hood to create and manage containers. The Docker engine provides a higher-level interface for working with containers, including image management, networking, and storage. Docker communicates with runc through this interface to create and manage containers.
@@ -28,7 +59,27 @@ Modern computers divide memory into kernel space and user space. User space is w
 
 
 
-# Random :
+
+## Resources :
+
+
+Containers from scratch (Starting the isolation): 
+
+Timeline : ``5:40`` ``9:07`` ``12:10`` ``13:36``
+
+https://www.youtube.com/watch?v=_TsSmSu57Zo&ab_channel=ContainerCamp
+
+
+
+
+
+
+
+
+
+-----------
+
+# Random : 
 
 - Containerization technology existed in Linux before Docker came along.
 - Docker essentially popularized and streamlined the process of creating and managing containers by providing a user-friendly interface and toolset.
@@ -66,7 +117,7 @@ Overall, namespaces and cgroups are two key features used in containerization te
 
 ## Misunderstanding:
 
-Docker is built on top of existing Linux technologies such as namespaces and cgroups, Docker did not "take out" these technologies from Linux. Rather, Docker leveraged(profit) these technologies to make it easier to create and manage containers.
+Docker is built on top of existing Linux technologies such as namespaces and cgroups, 
 
 Docker Inc. created a platform for building, shipping, and running applications in containers, using containerization technology. This platform provides a way to package applications and their dependencies into containers, and to deploy those containers to different environments.
 
@@ -119,6 +170,7 @@ Virtualization are highly portable because they encapsulate an entire operating 
 Containerization are also highly portable, but they achieve portability in a different way. Instead of encapsulating an entire operating system, containers encapsulate a single application and its dependencies. This means that a container can be moved between different physical hosts or cloud environments while retaining (keeping) the same underlying host operating system.
 
 Containers are typically much lighter and faster to start up than VMs, which makes them highly portable and well-suited for modern cloud environments.
+
 
 
 
