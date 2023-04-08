@@ -78,7 +78,9 @@ https://www.youtube.com/watch?v=_TsSmSu57Zo&ab_channel=ContainerCamp
 
 You may need to perform some performance testing to determine the optimal values for your environment (application or service).
 
+* Is the limits in the config.json for bundling a container it's a explicit thing that need to set up by the user not by the a tool or something else or what ??
 
+The limits for a container can be set explicitly by the user in the config.json file, However, the /proc file system in Linux provides a way for users and applications to view and manipulate the current state of the kernel and the system, including information about resource usage and limits
 
 * Can containers connect to each other even though they are isolated ??
 
