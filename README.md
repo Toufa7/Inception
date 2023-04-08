@@ -26,12 +26,9 @@ When you create a container using a container runtime like ``runc`` you need to 
 
 - The ``config.json`` is a configuration file that specifies various settings for the container, such as the command to run, environment variables, and networking settings 
 
-[Example of config.json file with explaining](https://github.com/Toufa7/Inception_1337/blob/main/config.json)
+[Simple example of config.json file with explaining](https://github.com/Toufa7/Inception_1337/blob/main/config.json)
 
 If a container exceeds the memory or CPU limit specified in the ``config.json`` file, the kernel will start killing processes inside the container in an attempt to free up memory (this result slower performance , crashing and unresponsive), Therefore, it's important to carefully configure resource limits based on the needs of your application.
-
-Example of config.json it's provided with explanation,  
-
 
 	    runc create <container-id> --bundle=<bundle-path>
 
