@@ -43,18 +43,19 @@ After the container is created, it can be started and managed using the runc sta
 
 > With ``runc`` you can create containers without the need for Docker. However, it is important to note that runc is a lower-level tool compared to Docker and requires more manual configuration and setup, So n contrast Docker provides a higher-level interface and automates many of the container management tasks.
 
-
 Docker uses both namespaces and cgroups to create and manage containers. By using these technologies, Docker is able to provide a lightweight and portable solution for running applications, without the need for a separate virtual machine. Docker uses the open-source container runtime called "runc" under the hood to create and manage containers. The Docker engine provides a higher-level interface for working with containers, including image management, networking, and storage. Docker communicates with runc through this interface to create and manage containers.
 
+## Networking : 
 
 
-## Kernel 
+Network Bridge:
 
-The kernel is a core component of an OS and serves as the main interface between the computer’s physical hardware and the processes running on it. The kernel enables multiple applications to share hardware resources by providing access to CPU, memory, disk I/O, and networking.
+- A virtual device that connects multiple containers together.
+- It act like a Switch allowing containers to connect to each others and forwarding traffic between them.
 
-Imagine a computer as comprising a series of layers, with the innermost layer being the hardware, and the outermost layers being the software applications running on the computer. In this analogy, the kernel is positioned between the hardware and the applications because it’s not only responsible for managing the hardware’s resources and executing software programs, but also for overseeing the interactions between these layers.
 
-Modern computers divide memory into kernel space and user space. User space is where application software is executed, while the kernel space is dedicated to the behind-the-scenes work needed to run a computer, like memory allocation and process management. Because of this separation of kernel and user spaces, the work done by the kernel isn’t typically visible to the user.
+Docker containers by default start attached to a bridge network called default.
+
 
 
 
@@ -72,14 +73,24 @@ https://www.youtube.com/watch?v=_TsSmSu57Zo&ab_channel=ContainerCamp
 
 
 
-
-
-
-
-
 -----------
 
 # Random : 
+
+
+## Kernel 
+
+The kernel is a core component of an OS and serves as the main interface between the computer’s physical hardware and the processes running on it. The kernel enables multiple applications to share hardware resources by providing access to CPU, memory, disk I/O, and networking.
+
+Imagine a computer as comprising a series of layers, with the innermost layer being the hardware, and the outermost layers being the software applications running on the computer. In this analogy, the kernel is positioned between the hardware and the applications because it’s not only responsible for managing the hardware’s resources and executing software programs, but also for overseeing the interactions between these layers.
+
+Modern computers divide memory into kernel space and user space. User space is where application software is executed, while the kernel space is dedicated to the behind-the-scenes work needed to run a computer, like memory allocation and process management. Because of this separation of kernel and user spaces, the work done by the kernel isn’t typically visible to the user.
+
+
+
+
+
+
 
 - Containerization technology existed in Linux before Docker came along.
 - Docker essentially popularized and streamlined the process of creating and managing containers by providing a user-friendly interface and toolset.
@@ -117,6 +128,16 @@ Overall, namespaces and cgroups are two key features used in containerization te
 
 ## Misunderstanding:
 
+* Can containers connect to each other even though they are isolated ??
+
+
+* Why docker bridge chose 172.16.X.X ??
+
+Docker does not specifically choose 172.16.X.X as the default IP address range for the bridge network. This is defined in the Docker daemon configuration file and can be customized by the user.
+cause it is a private IP address range that is not routable on the public internet and the Class B network 172.16.0.0/12 provides a large address space that can accommodate a large number of IP addresses for containers in the same network.
+
+* Does Docker Inc take the Linux technologie and made Docker ??
+
 Docker is built on top of existing Linux technologies such as namespaces and cgroups, 
 
 Docker Inc. created a platform for building, shipping, and running applications in containers, using containerization technology. This platform provides a way to package applications and their dependencies into containers, and to deploy those containers to different environments.
@@ -134,6 +155,9 @@ Docker uses a tool called "runc" to create and manage containers. When you run a
 The Docker engine provides a higher-level interface for working with containers, including image management, networking, and storage. Docker communicates with runc through this interface to create and manage containers.
 
 Overall, runc is a powerful and flexible tool for creating and managing containers. It provides the low-level isolation and resource management features that are necessary for containerization, and it's designed to be simple and easy to use.
+
+
+By default, each container in Docker is isolated from the others and has its own network namespace. This means that each container has its own network stack and virtual network interfaces, and can have its own IP address, routing table, and network configuration independent of the host and other containers. However, Docker provides a variety of networking options that allow containers to communicate and share resources with each other if needed.
 
 
 
@@ -170,8 +194,6 @@ Virtualization are highly portable because they encapsulate an entire operating 
 Containerization are also highly portable, but they achieve portability in a different way. Instead of encapsulating an entire operating system, containers encapsulate a single application and its dependencies. This means that a container can be moved between different physical hosts or cloud environments while retaining (keeping) the same underlying host operating system.
 
 Containers are typically much lighter and faster to start up than VMs, which makes them highly portable and well-suited for modern cloud environments.
-
-
 
 
 
