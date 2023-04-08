@@ -1,0 +1,95 @@
+/*
+    This is a basic example that simply launches a /bin/bash shell in the container.
+    It sets the working directory to /root and mounts the /proc filesystem and a tmpfs filesystem at /tmp.
+    The root field specifies the path to the root filesystem for the container.
+    We have added options to limit memory usage to 64MB and CPU shares to 512
+
+*/
+
+{
+  "ociVersion": "1.0.1",
+  //    The container will be launched with an interactive terminal that allows the user to interact with the command prompt of the container.
+  "process": {
+    "terminal": true,
+    "user": {
+      "uid": 0,
+      "gid": 0
+    },
+    "args": [
+      "/bin/bash"
+    ],
+    "env": [
+      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    ],
+    "cwd": "/root"
+  },
+  "root": {
+    "path": "rootfs"
+  },
+
+    /*
+        This mounts section specifies the file system paths that should be mounted inside the container,
+        it defines the paths on the host system that will be mounted inside the container
+    */
+
+  "mounts": [
+    {
+      "destination": "/proc",
+      "type": "proc",
+      "source": "proc"
+    },
+    {
+      "destination": "/dev",
+      "type": "tmpfs",
+      "source": "tmpfs",
+      "options": [
+        "nosuid",
+        "strictatime",
+        "mode=755",
+        "size=65536k"
+      ]
+    }
+  ],
+
+    /*
+        Setting limits for memory and CPU usage depends on the specific requirements and resources of your container,
+        If a container exceeds the memory or CPU limit , the kernel will start killing processes inside the container in an attempt to free up memory
+        (this result slower performance , crashing and unresponsive),
+        Therefore, it's important to carefully configure resource limits based on the needs of your application.
+    */
+
+  "linux": {
+    "resources": {
+      "memory": {
+        "limit": "64m"
+      },
+      "cpu": {
+        "shares": 512
+      }
+    },
+
+    /*
+        Defining the namespaces that the container should use. as you know namespaces provide an isolated view of the system resources for the container,
+        the container process is isolated from the host operating system and other containers,
+    */
+
+    "namespaces": [
+      {
+        "type": "pid"
+      },
+      {
+        "type": "network"
+      }
+    ],
+    "maskedPaths": [
+      "/proc/kcore"
+    ],
+    "readonlyPaths": [
+      "/proc/sys", 
+      "/proc/sysrq-trigger", 
+      "/proc/irq", 
+      "/proc/bus"
+    ]
+  },
+  "hostname": "container"
+}
