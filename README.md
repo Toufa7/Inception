@@ -6,20 +6,16 @@
 
 > **Note**
 
->  Docker did not "take out" these technologies from Linux. Rather, Docker leveraged(profit) these technologies to make it easier to create and manage containers.
+>  Docker did not "take out" these technologies from Linux. Rather, Docker leveraged (profit) these technologies to make it easier to create and manage containers.
 
 
 Docker runs on Windows and macOS by using a lightweight virtual machine called the **Docker Desktop VM** (it runs Linux as its OS). This Linux VM provides a platform for Docker to build and run containers just as if it were running on a native Linux system. The Docker Desktop VM is provided by the Windows Subsystem for Linux (WSL) on Windows and runs natively on macOS.
-
-
-
 
 
 $\color{red}{Namespaces}$ are a mechanism for isolating system resources such as process IDs, network interfaces, file systems, and user IDs between different processes or groups of processes. Namespaces provide a way to create isolated environments, like a container, where a group of processes can have its own view of the system resources and separate from the host operating system and other containers. 
 
 
 $\color{green}{Cgroups}$  are a kernel feature that allows the allocation of resources such as CPU time, memory, disk I/O, and network bandwidth to groups of processes. By using cgroups, Docker is able to limit the amount of resources that a container or a group of processes can use, which helps to ensure that the host system's resources are shared fairly among all running containers and processes.
-
 
 
 The ``runc`` command allow us to creates a new container with a provided bundle directory as the root filesystem for the container and a config.json file in the bundle directory containing the configuration for the container.
@@ -29,6 +25,11 @@ When you create a container using a container runtime like ``runc`` you need to 
 - The Root filesystem include all the files and directories that are necessary for the container to run, such as libraries, binaries, and configuration files (Ex: a directory containing a full Linux operating system, or just the files necessary to run a specific application.)
 
 - The ``config.json`` is a configuration file that specifies various settings for the container, such as the command to run, environment variables, and networking settings 
+
+
+If a container exceeds the memory or CPU limit specified in the ``config.json`` file, the kernel will start killing processes inside the container in an attempt to free up memory (this result slower performance , crashing and unresponsive), Therefore, it's important to carefully configure resource limits based on the needs of your application.
+
+Example of config.json it's provided with explanation,  
 
 
 	    runc create <container-id> --bundle=<bundle-path>
@@ -71,9 +72,46 @@ Timeline : ``5:40`` ``9:07`` ``12:10`` ``13:36``
 https://www.youtube.com/watch?v=_TsSmSu57Zo&ab_channel=ContainerCamp
 
 
+# Misunderstanding (Q&A):
+
+* How can i evaluate how much should i put in the limits (Talking about config.json file)??
+
+You may need to perform some performance testing to determine the optimal values for your environment (application or service).
 
 
------------
+
+* Can containers connect to each other even though they are isolated ??
+
+	Yes ... (to be continued)
+
+By default, each container in Docker is isolated from the others and has its own network namespace. This means that each container has its own network stack and virtual network interfaces, and can have its own IP address, routing table, and network configuration independent of the host and other containers. However, Docker provides a variety of networking options that allow containers to communicate and share resources with each other if needed.
+
+
+* Why docker bridge chose 172.16.X.X ??
+
+Docker does not specifically choose 172.16.X.X as the default IP address range for the bridge network. This is defined in the Docker daemon configuration file and can be customized by the user.
+cause it is a private IP address range that is not routable on the public internet and the Class B network 172.16.0.0/12 provides a large address space that can accommodate a large number of IP addresses for containers in the same network.
+
+* Does Docker Inc take the Linux technologie and made Docker ??
+
+Docker is built on top of existing Linux technologies such as namespaces and cgroups, 
+
+Docker Inc. created a platform for building, shipping, and running applications in containers, using containerization technology. This platform provides a way to package applications and their dependencies into containers, and to deploy those containers to different environments.
+
+Under the hood, Docker uses a combination of existing Linux technologies, including namespaces and cgroups, to provide an isolated environment for running containers. By using these technologies, Docker is able to provide a lightweight and portable solution for running applications, without the need for a separate virtual machine.
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------Random--------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------Random--------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------Random--------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------Random--------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Random : 
 
@@ -125,39 +163,6 @@ At the same time, Docker also uses cgroups to limit the resource usage of the co
 
 Overall, namespaces and cgroups are two key features used in containerization technology to create and manage containers. By using namespaces and cgroups, containerization technology like Docker is able to provide an isolated and controlled environment for running processes, while also ensuring that the resource usage is limited and controlled.
 
-
-## Misunderstanding:
-
-* Can containers connect to each other even though they are isolated ??
-
-
-* Why docker bridge chose 172.16.X.X ??
-
-Docker does not specifically choose 172.16.X.X as the default IP address range for the bridge network. This is defined in the Docker daemon configuration file and can be customized by the user.
-cause it is a private IP address range that is not routable on the public internet and the Class B network 172.16.0.0/12 provides a large address space that can accommodate a large number of IP addresses for containers in the same network.
-
-* Does Docker Inc take the Linux technologie and made Docker ??
-
-Docker is built on top of existing Linux technologies such as namespaces and cgroups, 
-
-Docker Inc. created a platform for building, shipping, and running applications in containers, using containerization technology. This platform provides a way to package applications and their dependencies into containers, and to deploy those containers to different environments.
-
-Under the hood, Docker uses a combination of existing Linux technologies, including namespaces and cgroups, to provide an isolated environment for running containers. By using these technologies, Docker is able to provide a lightweight and portable solution for running applications, without the need for a separate virtual machine.
-
-The Docker Desktop VM is a small Linux virtual machine that runs on top of the Windows (Windows Subsystem for Linux (WSL) WSL provides a layer for mapping Windows kernel system calls to Linux kernel system calls, allowing Linux binaries to run in Windows unmodified) or macOS host operating system. It provides a Linux environment that can run Docker containers, and it also includes the necessary Docker components, such as the Docker engine and Docker CLI.
-
-Windows Subsystem For Linux (WSL) is a tool provided by Microsoft to run Linux natively on Windows. It’s designed to be a seamless experience, essentially providing a full Linux shell that can interact with your Windows filesystem.
-
-Docker uses the open-source container runtime called "runc" under the hood to create and manage containers. "runc" is a lightweight, portable implementation of the Open Container Initiative (OCI) runtime specification.
-
-Docker uses a tool called "runc" to create and manage containers. When you run a Docker container, Docker creates a new container process using runc. This container process is launched with its own settings, which isolate it from the host operating system.
-	
-The Docker engine provides a higher-level interface for working with containers, including image management, networking, and storage. Docker communicates with runc through this interface to create and manage containers.
-
-Overall, runc is a powerful and flexible tool for creating and managing containers. It provides the low-level isolation and resource management features that are necessary for containerization, and it's designed to be simple and easy to use.
-
-
-By default, each container in Docker is isolated from the others and has its own network namespace. This means that each container has its own network stack and virtual network interfaces, and can have its own IP address, routing table, and network configuration independent of the host and other containers. However, Docker provides a variety of networking options that allow containers to communicate and share resources with each other if needed.
 
 
 
