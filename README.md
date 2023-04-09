@@ -58,8 +58,6 @@ Docker containers by default start attached to a bridge network called default.
 
 
 
-
-
 ## Resources :
 
 
@@ -69,6 +67,73 @@ Timeline : ``5:40`` ``9:07`` ``12:10`` ``13:36``
 
 https://www.youtube.com/watch?v=_TsSmSu57Zo&ab_channel=ContainerCamp
 
+
+## Commands :
+## Using the default bridge network : 
+
+1 - Here’s a simple example. I’ll start an nginx container. Then I’ll start a busybox container alongside nginx, and try to make a request to Nginx with wget (can they see each other let see ??):
+
+	docker run --name mynginx --detach nginx
+
+``--rm``		: to remove the container when it exits
+
+``--name``		: option is used to specify a name for the container
+
+``--detach``	: run the container in the background and detach it from the terminal
+
+2 - Getting the IP Address of the NGINX:
+
+	docker inspect | grep "IPAddress"
+
+3 - Run busybox or any container that can provide a user-interaction
+
+	docker run --name mybusybox busybox
+
+4 - Can i see the Welcoming page of the Nginx Homepage !?
+
+	wget -q -O - NGINX_IP_ADDRESS:PORT
+
+
+اش بانلك 
+
+this means that every container can see every other container.
+
+## Creating a user-defined bridge network : 
+
+
+1 - Create a user-defined bridge network :
+
+	docker network create poms-network
+
+to remove it make sure you stop your containers and use the command :
+
+	docker network rm poms-network
+
+2 - Start a container and connect it to the bridge :
+
+
+	docker run --rm --net poms --name my_apache -d httpd
+
+
+3 - Start a busybox container so that we can test out the network :
+
+	docker run --net poms -it busybox
+
+
+4 - Address another container, using its name as the hostname / or the IP Address :
+
+	wget -q -O - tulipnginx:80
+
+
+It’s a great way to have a custom network set up, and isolation from other containers that aren’t in the network
+
+
+> Note
+
+	docker network inspect <my-network / CONTAINER-ID>
+
+
+This command used to view the details of a specific Docker network, also lists the containers connected to the network and their IP addresses
 
 # Misunderstanding (Q&A):
 
