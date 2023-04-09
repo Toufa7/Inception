@@ -122,7 +122,7 @@ to remove it make sure you stop your containers and use the command :
 
 4 - Address another container, using its name as the hostname / or the IP Address :
 
-	wget -q -O - tulipnginx:80
+	wget -q -O - APACHE_IP_ADDRESS:PORT
 
 
 It’s a great way to have a custom network set up, and isolation from other containers that aren’t in the network
