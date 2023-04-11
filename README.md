@@ -68,7 +68,12 @@ Timeline : ``5:40`` ``9:07`` ``12:10`` ``13:36``
 https://www.youtube.com/watch?v=_TsSmSu57Zo&ab_channel=ContainerCamp
 
 
+How a Start-Up Received a $75,000 Bill for 2 Hours of Google Cloud Services
+
+https://www.electropages.com/blog/2021/01/how-start-received-75000-bill-2-hours-google-cloud-services
+
 ## Commands :
+
 ## Using the default bridge network : 
 
 1 - Here’s a simple example. I’ll start an nginx container. Then I’ll start a busybox container alongside nginx, and try to make a request to Nginx with wget (can they see each other let see ??):
@@ -135,6 +140,44 @@ It’s a great way to have a custom network set up, and isolation from other con
 
 This command used to view the details of a specific Docker network, also lists the containers connected to the network and their IP addresses
 
+
+## Containers and presistant data :
+
+
+By default, all storage within a container uses this local storage ( itt exists somewhere under /var/lib/<program_name> ). So every directory in a container uses this storage by default.
+
+If your containers don’t create persistent data, local storage will be fine and you’re good to go. But if your containers do need to persist data.
+
+At a high-level, you create a volume, then you create a container, and you mount the volume into it. The volume gets mounted to a directory in the container’s filesystem, and anything written to that directory is written to the volume. If you then delete the container, the volume and its data will still exist.
+
+
+1 - Creating and managing Docker volumes :
+
+	docker create volume <volume_name>
+
+2 - You can see it and inspect it with the docker volume :
+
+	docker volume inspect poms_volume
+
+
+<img src="Images/inspect_volume.png" width="500">
+
+The Driver and Scope are local means that they are only available to containere in the Docker Host, the Mountpoint specifies the path on the host system where the volume is mounted.
+
+
+<img src="Images/volume_prune.png" width="500">
+
+
+>__Warning__ : Caution
+
+this command used to remove all unused local volumes. Unused local volumes are those which are not referenced by any containers.
+
+if you want to specify use
+
+	docker volume rm <volume>
+
+Congrats you've created, inspected and now you deleted ...
+
 # Misunderstanding (Q&A):
 
 * How can i evaluate how much should i put in the limits (Talking about config.json file)??
@@ -150,6 +193,19 @@ The limits for a container can be set explicitly by the user in the config.json 
 	Yes ... (to be continued)
 
 By default, each container in Docker is isolated from the others and has its own network namespace. This means that each container has its own network stack and virtual network interfaces, and can have its own IP address, routing table, and network configuration independent of the host and other containers. However, Docker provides a variety of networking options that allow containers to communicate and share resources with each other if needed.
+
+
+* Why should i use third-party storage system ?? docker volumes not enough ??
+
+
+- They may offer advanced features (advanced data management capabilities such as data replication, data deduplication, or data encryption)
+
+- If a Docker volume runs out of space on the host machine, it can potentially result in data loss or errors when attempting to write new data to the volume.
+
+- Using a third-party storage system in conjunction with Docker volumes can provide greater data persistence and portability
+
+- For sharing data, Docker volumes allow containers running on the same host to share data easily. However, if you need to share data across different hosts or even different containerization platforms, a third-party storage system can provide a more flexible and portable solution
+
 
 
 * Why docker bridge chose 172.16.X.X ??
