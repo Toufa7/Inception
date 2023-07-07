@@ -222,6 +222,11 @@ Docker Inc. created a platform for building, shipping, and running applications 
 Under the hood, Docker uses a combination of existing Linux technologies, including namespaces and cgroups, to provide an isolated environment for running containers. By using these technologies, Docker is able to provide a lightweight and portable solution for running applications, without the need for a separate virtual machine.
 
 
+## Resources :
+
+https://www.tutorialworks.com/container-networking/
+
+
 
 
 
@@ -320,6 +325,7 @@ Virtualization are highly portable because they encapsulate an entire operating 
 Containerization are also highly portable, but they achieve portability in a different way. Instead of encapsulating an entire operating system, containers encapsulate a single application and its dependencies. This means that a container can be moved between different physical hosts or cloud environments while retaining (keeping) the same underlying host operating system.
 
 Containers are typically much lighter and faster to start up than VMs, which makes them highly portable and well-suited for modern cloud environments.
+
 
 
 
