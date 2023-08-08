@@ -1,0 +1,11 @@
+version: "2.2"
+services:
+  server:
+    container_name: nginx
+    build:
+      context: ./requirements/nginx
+      dockerfile: ./Dockerfile-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+  
