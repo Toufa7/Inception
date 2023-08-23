@@ -178,6 +178,11 @@ Congrats you've created, inspected and now you deleted ...
 
 You may need to perform some performance testing to determine the optimal values for your environment (application or service).
 
+* Is the version of Docker-Compose refere to the application i'm deploying ?
+
+The version specified in a Docker Compose file actually refers to the version of the Docker Compose file format not the version of the application you're deploying.
+
+
 * Is the limits in the config.json for bundling a container it's a explicit thing that need to set up by the user not by the a tool or something else or what ??
 
 The limits for a container can be set explicitly by the user in the config.json file, However, the /proc file system in Linux provides a way for users and applications to view and manipulate the current state of the kernel and the system, including information about resource usage and limits
