@@ -60,17 +60,11 @@ Docker containers by default start attached to a bridge network called default.
 
 ## Resources :
 
-
 Containers from scratch (Starting the isolation): 
 
 Timeline : ``5:40`` ``9:07`` ``12:10`` ``13:36``
 
 https://www.youtube.com/watch?v=_TsSmSu57Zo&ab_channel=ContainerCamp
-
-
-How a Start-Up Received a $75,000 Bill for 2 Hours of Google Cloud Services
-
-https://www.electropages.com/blog/2021/01/how-start-received-75000-bill-2-hours-google-cloud-services
 
 ## Commands :
 
