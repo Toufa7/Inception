@@ -1,0 +1,65 @@
+version: "3.8"
+services:
+###  MARIADB  ###
+  mariadb:
+    image: mariadb_img
+    container_name: mariadb
+    networks:
+      - my_bridge
+    build:
+      context: requirements/mariadb
+      dockerfile: ./Dockerfile-mariadb
+    ports:
+      - 3306:3306
+    volumes:
+      - mariadb_vol:/var/lib/mysql
+    env_file:
+      - ./.env
+    # restart: always
+###  WORDPRESS  ###
+  wordpress:
+    image: wordpress_img
+    depends_on:
+      - mariadb
+    container_name: wordpress
+    networks:
+      - my_bridge
+    build:
+      context: requirements/wordpress
+      dockerfile: ./Dockerfile-wordpress
+    ports:
+      - "9000:80"
+    volumes:
+      - wordpress_vol:/var/www/html/wordpress
+    env_file:
+      - ./.env
+#     restart: always
+# ###  NGINX  ###
+  server:
+    container_name: nginx
+    depends_on:
+      - wordpress
+    build:
+      context: requirements/nginx
+      dockerfile: ./Dockerfile-nginx
+    ports:
+      - "443:443"
+    networks:
+      - my_bridge
+    env_file:
+      - ./.env
+#     restart: always
+
+    
+
+# Networks #
+networks:
+  my_bridge:
+    name: my_bridge
+    driver: bridge
+
+
+# Volumes #
+volumes:
+  mariadb_vol: {}
+  wordpress_vol: {}

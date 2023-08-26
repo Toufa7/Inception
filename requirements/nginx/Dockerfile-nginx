@@ -1,0 +1,15 @@
+FROM    debian:bullseye
+
+RUN     mkdir /shared
+
+WORKDIR /shared
+
+COPY    ./tools/nginx_requirements.sh .
+
+COPY    ./conf/nginx.conf /etc/nginx/conf.d/
+
+RUN     apt update -y && chmod +x nginx_requirements.sh && ./nginx_requirements.sh
+
+WORKDIR /etc/nginx
+
+ENTRYPOINT ["nginx", "-g", "daemon off;"]

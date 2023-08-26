@@ -1,0 +1,13 @@
+FROM    debian:bullseye
+
+RUN     mkdir /shared
+
+WORKDIR /shared
+
+COPY    /tools/mariadb_requirements.sh \
+        /tools/queries.sql \
+        ./
+
+RUN     apt update -y && chmod +x mariadb_requirements.sh
+
+ENTRYPOINT [ "./mariadb_requirements.sh" ]

@@ -1,0 +1,19 @@
+-- SQL Queries 
+DROP DATABASE IF EXISTS wordpress;
+CREATE DATABASE wordpress;
+USE wordpress;
+CREATE USER 'user1'@'%' IDENTIFIED BY 'us@r123';
+GRANT ALL PRIVILEGES ON wordpress.* TO 'user1'@'%';
+-- Checking
+SHOW DATABASES;
+SHOW VARIABLES LIKE 'bind_address';
+SELECT host, user, password FROM mysql.user WHERE user = 'user1';
+
+
+-- DROP DATABASE IF EXISTS $MYSQL_DATABASE;
+-- CREATE DATABASE $MYSQL_DATABASE;
+-- CREATE USER '${MYSQL_USER}'@'${MYSQL_ROOT_HOST}' IDENTIFIED BY '${MYSQL_PASSWORD}';
+-- GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '${MYSQL_USER}'@'${MYSQL_ROOT_HOST}';
+-- SHOW DATABASES;
+-- SHOW VARIABLES LIKE 'bind_address';
+-- SELECT host, user, password FROM mysql.user WHERE user = '${MYSQL_USER}';
