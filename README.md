@@ -196,14 +196,13 @@ By default, each container in Docker is isolated from the others and has its own
 
 * Why should i use third-party storage system ?? docker volumes not enough ??
 
+They may offer advanced features (advanced data management capabilities such as data replication, data deduplication, or data encryption)
 
-- They may offer advanced features (advanced data management capabilities such as data replication, data deduplication, or data encryption)
+If a Docker volume runs out of space on the host machine, it can potentially result in data loss or errors when attempting to write new data to the volume.
 
-- If a Docker volume runs out of space on the host machine, it can potentially result in data loss or errors when attempting to write new data to the volume.
+Using a third-party storage system in conjunction with Docker volumes can provide greater data persistence and portability
 
-- Using a third-party storage system in conjunction with Docker volumes can provide greater data persistence and portability
-
-- For sharing data, Docker volumes allow containers running on the same host to share data easily. However, if you need to share data across different hosts or even different containerization platforms, a third-party storage system can provide a more flexible and portable solution
+For sharing data, Docker volumes allow containers running on the same host to share data easily. However, if you need to share data across different hosts or even different containerization platforms, a third-party storage system can provide a more flexible and portable solution
 
 
 
