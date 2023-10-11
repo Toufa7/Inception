@@ -15,7 +15,7 @@ services:
       - mariadb_vol:/var/lib/mysql
     env_file:
       - ./.env
-    # restart: always
+    restart: on-failure
 ###  WORDPRESS  ###
   wordpress:
     image: wordpress_img
@@ -33,9 +33,10 @@ services:
       - wordpress_vol:/var/www/html/wordpress
     env_file:
       - ./.env
-#     restart: always
-# ###  NGINX  ###
+    restart: on-failure
+###  NGINX  ###
   server:
+    image: nginx_img
     container_name: nginx
     depends_on:
       - wordpress
@@ -44,11 +45,13 @@ services:
       dockerfile: ./Dockerfile-nginx
     ports:
       - "443:443"
+    volumes:
+      - wordpress_vol:/var/www/html/wordpress
     networks:
       - my_bridge
     env_file:
       - ./.env
-#     restart: always
+    restart: on-failure
 
     
 

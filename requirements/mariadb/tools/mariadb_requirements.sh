@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Dependencies
-apt install wget mariadb-server net-tools iputils-ping vim -y
+apt install wget mariadb-server gettext-base net-tools iputils-ping vim -y
 sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)"
 echo "[Success: MariaDB dependencies]"
 sleep 5
@@ -16,13 +16,11 @@ sleep 5
 
 # Running mysql in background mode
 /usr/bin/mysqld_safe &
-
-sleep 10
+sleep 5
 
 # Creating a database called X and a user called Y with a password Y then grant him all privileges on my X database
-mysql < queries.sql
+envsubst < queries.sql | mysql
 sleep 3
-
 
 service mariadb stop
 sleep 5
