@@ -14,7 +14,7 @@ services:
     volumes:
       - mariadb_vol:/var/lib/mysql
     env_file:
-      - ./.env
+      - ./variables.env
     restart: on-failure
 ###  WORDPRESS  ###
   wordpress:
@@ -32,9 +32,9 @@ services:
     volumes:
       - wordpress_vol:/var/www/html/wordpress
     env_file:
-      - ./.env
+      - ./variables.env
     restart: on-failure
-###  NGINX  ###
+# ###  NGINX  ###
   server:
     image: nginx_img
     container_name: nginx
@@ -50,10 +50,8 @@ services:
     networks:
       - my_bridge
     env_file:
-      - ./.env
+      - ./variables.env
     restart: on-failure
-
-    
 
 # Networks #
 networks:
@@ -66,3 +64,6 @@ networks:
 volumes:
   mariadb_vol: {}
   wordpress_vol: {}
+
+
+
