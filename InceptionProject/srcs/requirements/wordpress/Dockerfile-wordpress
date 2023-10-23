@@ -1,0 +1,16 @@
+FROM    debian:bullseye
+
+RUN     mkdir /shared
+
+RUN     mkdir -p var/www/html/wordpress/
+
+COPY    /tools/wordpress_requirements.sh /shared
+
+COPY    /conf/www.conf /etc/php/7.4/fpm/pool.d/
+
+
+RUN     apt update -y && chmod +x /shared/wordpress_requirements.sh
+
+WORKDIR /var/www/html/wordpress
+
+CMD [ "/shared/wordpress_requirements.sh" ]
