@@ -1,7 +1,5 @@
 # Inception
 
-
-
 [Docker](https://en.wikipedia.org/wiki/Docker,_Inc.) is a popular containerization technology that makes it easier to create, manage, and deploy containers. **(Containerization technology existed in Linux before Docker, but Docker made it more user-friendly and streamlined the process)** It is built on top of existing Linux technologies such as namespaces and cgroups, which are used to provide an isolated and controlled environment for running processes, while also ensuring that resource usage is limited and controlled.
 
 > **Note**
@@ -324,6 +322,63 @@ Containerization are also highly portable, but they achieve portability in a dif
 
 Containers are typically much lighter and faster to start up than VMs, which makes them highly portable and well-suited for modern cloud environments.
 
+
+********************
+Inception lgoal dyalha houwa nbulidiw wa7ed lweb application men 3 dyal services : 
+
+MariaDB (MYSQL):  
+- MariaDB hia wa7ed database system hna khdmnaha bach kstory lina data ta3 wordpress, wordpress 7tajha bach ystory user informations bla database our wordpress website won’t be able to save and retrive content, 
+
+Wordpress: 
+
+How wa7ed lwebsite builder , w kay3tiek wa7ed linterface bach tcreey w tmanage lcontent ta3 lwebsite dyaleek , hna kan kinteracty m3a  MariaDB (store, retrieve, update) 
+
+Nginx: 
+
+Houwa wa7ed lweb server li kayhandli lina http requests men client (browser) w kayroutihoum l files wla services li kayna flocation ta3 requests  
+
+Bnsba lPHP-FPM fhouwa wa7ed php process li kaykhdem m3a nginx bach yprocessy php scripts  
+
+Now let’s talk about the connection between had services: 
+
+MariaDB kaystory data ta3 Wordpress b7al (posts, comments, user settings)  
+
+Fach chi visitor kaydkhel lsite dyalna hna NGINX kaykhed dik requests  
+
+ 
+
+Lfact li 3ndna koul service bo7do kay3tina wa7ed scalabily w flexibily donc la in term of troubleshoot wla lmanagement it’s easier.  
+
+ 
+
+ 
+
+Ahno hia DevOps: 
+
+Development -> Testing -> Stagging -> Production 
+
+DevOps Houma wa7ed l’ensemble ta3 practices li kayaimiw bach tkoun collab mabin Dev and Ops bach ndelivriw high-quality application, 
+
+ 
+
+Dev: fhad lphase developers kai bulidiw w ytestiw lapp dyalhoum locally hadchi fih creating dockerfiles/Docker-composes, bnssba lnetworking hna developers kaykhdmo user-defined bridge bach ycommunicaiw services dyalhoum. 
+
+Ops: ama bnessba lhado fkaydeploiw l’app flproduction mode hadchi fiha setup dyal (infrastructure (hna kaykhdmo cloud providers bach yhostiw w ymangiw l’application), scalling, w l’availability ..), bnssba lnetworking hna kaykhdmo boverlay driver 7itach kaykhdmo fmulti-host bach kanidiro communiation mabin different environment 
+
+ Orchestration: hia lcoordination w lmanagement ta3 different components bach nassuriw que rahoum khdamin naddin,  
+ 
+
+ 
+
+Scalability: donc a base dyal demand l’application dylana kayscila (new instances, load balancing, and distributing workloads effectively ..)  
+Coordination: kanassuriw que lcompenents dyalwna khdamin m3a ba3dyathoum mzzyan koul wa7ed wakhed taks dyalo, w status dyal koul compenents … 
+
+ 
+
+Orchestration jat men orchestra dyal music 7itach 3ndna musician (a service awla compenent) w instruments (ressources), lorchestra (conductor) kayguiiw koul musican fo9ach yl3eb w tone w velocity. Lgoal dyalo houwa ycreay music dakchi mharmoni w mcoordini  
+
+ 
+********************
 
 
 
